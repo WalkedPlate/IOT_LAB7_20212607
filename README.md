@@ -24,10 +24,10 @@ Email: ampueromario@hotmail.com
 ### 🎫 Códigos QR de Prueba
 
 Para su comodidad, se proporcionan los QRs de las líneas actuales:
-- [QR Línea IO37B](IO37B.jpg)
-- [QR Línea 8104](8104.jpg)
-- [QR Línea IM04](IM04.jpg)
-- [QR Línea IM11](IM11.jpg)
+- [QR Línea IO37B](QRs/IO37B.jpg)
+- [QR Línea 8104](QRs/8104.jpg)
+- [QR Línea IM04](QRs/IM04.jpg)
+- [QR Línea IM11](QRs/IM11.jpg)
 
 **Nota**: También puede obtener los códigos QR de cada línea directamente en la aplicación:
 - 🏢 **Vista Empresa**: En el detalle de cada línea
