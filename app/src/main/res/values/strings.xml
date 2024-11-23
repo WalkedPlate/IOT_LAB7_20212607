@@ -1,0 +1,129 @@
+<resources>
+    <string name="app_name">IOT_LAB7_20212607</string>
+    <string name="action_settings">Settings</string>
+
+
+    <!-- Login -->
+    <string name="login_title">Bienvenido</string>
+    <string name="login_subtitle">Inicia sesión para continuar</string>
+    <string name="btn_login_microsoft">Continuar con Microsoft</string>
+    <string name="login_loading">Iniciando sesión…</string>
+    <string name="login_error">Error al iniciar sesión</string>
+
+    <!-- Mensajes de bienvenida -->
+    <string name="welcome_message">Bienvenido, %1$s</string>
+    <string name="logout">Cerrar sesión</string>
+
+    <!-- Títulos -->
+    <string name="title_lines">Líneas de Bus</string>
+    <string name="title_scan">Escanear QR</string>
+    <string name="title_details">Detalles</string>
+    <string name="title_edit">Editar</string>
+    <string name="bus_lines_title">Mis Líneas de Bus</string>
+    <string name="edit_bus_line">Editar Línea de Bus</string>
+
+    <!-- Información de bus -->
+    <string name="label_unit_price">Precio unitario</string>
+    <string name="label_subscription_price">Precio de suscripción</string>
+    <string name="label_balance">Saldo disponible: S/ %1$.2f</string>
+    <string name="btn_subscribe">Suscribirse</string>
+    <string name="monthly_revenue">Ingresos mensuales</string>
+    <string name="bus_line_name">Nombre de la línea</string>
+    <string name="unit_price">Precio por viaje</string>
+    <string name="subscription_price">Precio de suscripción mensual</string>
+
+    <!-- Botones y acciones -->
+    <string name="add_bus_line">Agregar línea</string>
+    <string name="add_image">Agregar imagen</string>
+    <string name="save">Guardar</string>
+
+    <!-- Escaneo QR -->
+    <string name="scan_qr_title">Escanea el código QR</string>
+    <string name="scan_qr_description">Coloca el código QR dentro del marco para escanear</string>
+    <string name="msg_scan_entry">Escanee el código QR para ingresar al bus</string>
+    <string name="msg_scan_exit">Escanee el código QR para registrar su salida</string>
+    <string name="msg_scanning">Escaneando…</string>
+    <string name="toggle_flash">Linterna</string>
+    <string name="success_entry_title">¡Buen viaje!</string>
+    <string name="success_exit_title">¡Gracias por viajar con nosotros!</string>
+    <string name="amount_charged">Monto cobrado: S/ %1$.2f</string>
+    <string name="amount_refunded">Cashback recibido: S/ %1$.2f</string>
+    <string name="current_balance">Saldo actual: S/ %1$.2f</string>
+    <string name="btn_ok">Aceptar</string>
+    <!-- Loading Dialog -->
+    <string name="loading_generic">Cargando…</string>
+    <string name="loading_processing_qr">Procesando código QR…</string>
+    <string name="loading_saving">Guardando cambios…</string>
+
+    <!-- Mensajes de acción -->
+    <string name="msg_subscription_success">Suscripción realizada con éxito</string>
+    <string name="msg_insufficient_balance">Saldo insuficiente</string>
+    <string name="msg_confirm_subscription">¿Confirmar suscripción?</string>
+    <string name="btn_confirm">Confirmar</string>
+    <string name="btn_cancel">Cancelar</string>
+
+    <!-- Navegación -->
+    <string name="nav_lines">Líneas</string>
+    <string name="nav_scan">Escanear QR</string>
+
+    <!-- Mensajes de error -->
+    <string name="error_generic">Ha ocurrido un error</string>
+    <string name="error_no_camera">No se puede acceder a la cámara</string>
+    <string name="error_no_connection">Sin conexión a internet</string>
+    <string name="error_invalid_qr">Código QR inválido</string>
+    <string name="error_upload_image">Error al subir la imagen</string>
+    <string name="error_save_data">Error al guardar los datos</string>
+
+    <!-- Diálogos -->
+    <string name="dialog_title_confirm">Confirmar acción</string>
+    <string name="dialog_message_delete_image">¿Desea eliminar esta imagen?</string>
+    <string name="dialog_title_loading">Cargando</string>
+    <string name="dialog_message_uploading">Subiendo imágenes…</string>
+    <string name="dialog_message_saving">Guardando cambios…</string>
+
+    <!-- Éxito -->
+    <string name="success_save">Cambios guardados exitosamente</string>
+    <string name="success_subscription">Suscripción realizada exitosamente</string>
+    <string name="success_entry">¡Buen viaje!</string>
+    <string name="success_exit">¡Gracias por viajar con nosotros!</string>
+
+
+    <!-- Imágenes -->
+    <string name="delete_image">Eliminar imagen</string>
+    <string name="image_upload_progress">Subiendo imagen…</string>
+
+
+    <string name="monthly_revenue_line">Ingresos: S/ %1$.2f</string>
+    <string name="subscriptions_count">%1$d suscriptores</string>
+    <string name="confirm_subscription">Confirmar suscripción</string>
+    <string name="subscription_confirmation_message">Se debitará el monto de tu saldo actual. Esta suscripción es válida por 30 días.</string>
+
+    <string name="logout_confirmation">¿Estás seguro que deseas cerrar sesión?</string>
+    <string name="price_format">S/ %.2f</string>
+
+    <string name="already_subscribed">Ya estás suscrito</string>
+    <string name="processing_subscription">Procesando suscripción…</string>
+    <string name="insufficient_balance">Saldo insuficiente</string>
+    <string name="subscription_success">Suscripción realizada con éxito</string>
+
+
+    <string name="subscription_benefits">Beneficios de la suscripción</string>
+    <string name="benefit_unlimited_rides">Viajes ilimitados durante 30 días</string>
+    <string name="benefit_priority_boarding">Acceso prioritario al bus</string>
+
+    <string name="processing_entry">Procesando entrada…</string>
+    <string name="processing_exit">Procesando salida…</string>
+
+    <string name="empty_bus_lines">No tienes líneas de bus registradas.\nPresiona el botón + para agregar una.</string>
+
+
+    <string name="error_required_field">Este campo es obligatorio</string>
+    <string name="error_invalid_price">El precio debe ser mayor a 0</string>
+    <string name="error_upload_images">Error al subir las imágenes</string>
+    <string name="error_save">Error al guardar los cambios</string>
+    <string name="saving">Guardando cambios…</string>
+    <string name="select_images">Seleccionar imágenes</string>
+    <string name="delete_image_confirmation">¿Está seguro que desea eliminar esta imagen?</string>
+
+
+</resources>
