@@ -21,6 +21,11 @@ Email: ampueromario@hotmail.com
 - Todas las líneas de bus existentes serán asignadas a este usuario
 - Podrá gestionar y visualizar todas las líneas desde el panel de empresa
 
+### 🔑 Acceso como usuario
+
+Solo se necesita hacer la autenticación (Microsoft) con otro correo distinto a *ampueromario@hotmail.com*
+
+
 ### 🎫 Códigos QR de Prueba
 
 Para su comodidad, se proporcionan los QRs de las líneas actuales:
