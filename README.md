@@ -23,7 +23,7 @@ Email: ampueromario@hotmail.com
 
 ### 🔑 Acceso como usuario
 
-Solo se necesita hacer la autenticación (Microsoft) con otro correo distinto a *ampueromario@hotmail.com*
+Solo se necesita hacer la autenticación (Microsoft) con un correo distinto a *ampueromario@hotmail.com*
 
 
 ### 🎫 Códigos QR de Prueba
