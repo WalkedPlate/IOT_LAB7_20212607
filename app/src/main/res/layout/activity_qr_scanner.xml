@@ -14,7 +14,7 @@
         app:autoFocusButtonColor="@color/white"
         app:autoFocusButtonVisible="true"
         app:flashButtonColor="@color/white"
-        app:flashButtonVisible="true"
+        app:flashButtonVisible="false"
         app:frameAspectRatioHeight="1"
         app:frameAspectRatioWidth="1"
         app:frameColor="@color/white"
@@ -25,6 +25,20 @@
         app:maskColor="#77000000"
         app:layout_constraintBottom_toTopOf="@id/cardScanInfo"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btnFlash"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:src="@drawable/ic_flash_off"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:backgroundTint="@color/semi_transparent"
+        app:tint="@color/white"
+        app:borderWidth="0dp"
+        app:elevation="2dp"
+        android:contentDescription="@string/toggle_flash"/>
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cardScanInfo"

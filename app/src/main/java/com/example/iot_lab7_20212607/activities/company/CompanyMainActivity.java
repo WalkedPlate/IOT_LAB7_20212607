@@ -2,6 +2,7 @@ package com.example.iot_lab7_20212607.activities.company;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -19,6 +20,7 @@ import com.example.iot_lab7_20212607.databinding.ActivityCompanyMainBinding;
 import com.example.iot_lab7_20212607.models.BusLine;
 import com.example.iot_lab7_20212607.models.Transaction;
 import com.example.iot_lab7_20212607.preferences.PreferenceManager;
+import com.example.iot_lab7_20212607.utils.Constants;
 import com.example.iot_lab7_20212607.utils.DialogUtils;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.firebase.auth.FirebaseAuth;
@@ -74,29 +76,73 @@ public class CompanyMainActivity extends AppCompatActivity {
         binding.btnLogout.setOnClickListener(v -> logout());
     }
 
+    // SE USÓ CLAUDE.AI PARA ESTÉ MÉTODO
+
+
     private void loadCompanyData() {
         String userName = preferenceManager.getUserName();
         binding.tvWelcome.setText(getString(R.string.welcome_message, userName));
 
-        // Cargar ingresos mensuales
-        String userId = preferenceManager.getUserId();
-        long startOfMonth = getStartOfMonth();
+        String companyId = preferenceManager.getUserId();
 
-        mFirestore.collection("transactions")
-                .whereEqualTo("companyId", userId)
-                .whereGreaterThanOrEqualTo("timestamp", startOfMonth)
+        binding.tvMonthlyRevenue.setText(getString(R.string.price_format, 0.0));
+
+        mFirestore.collection("busLines")
+                .whereEqualTo("companyId", companyId)
                 .get()
-                .addOnSuccessListener(queryDocumentSnapshots -> {
-                    double totalRevenue = 0;
-                    for (DocumentSnapshot document : queryDocumentSnapshots) {
-                        Transaction transaction = document.toObject(Transaction.class);
-                        if (transaction != null) {
-                            totalRevenue += transaction.getAmount();
-                        }
+                .addOnSuccessListener(busLinesSnapshot -> {
+                    Log.d("CompanyMainActivity", "Bus lines found: " + busLinesSnapshot.size());
+                    if (busLinesSnapshot.isEmpty()) {
+                        return;
                     }
-                    binding.tvMonthlyRevenue.setText(getString(R.string.price_format, totalRevenue));
+
+                    List<String> busLineIds = new ArrayList<>();
+                    for (DocumentSnapshot doc : busLinesSnapshot.getDocuments()) {
+                        busLineIds.add(doc.getId());
+                        Log.d("CompanyMainActivity", "Added bus line ID: " + doc.getId());
+                    }
+
+                    long startOfMonth = getStartOfMonth();
+                    Log.d("CompanyMainActivity", "Start of month: " + startOfMonth);
+
+                    mFirestore.collection("transactions")
+                            .whereIn("busLineId", busLineIds)
+                            .whereGreaterThanOrEqualTo("timestamp", startOfMonth)
+                            .get()
+                            .addOnSuccessListener(transactionsSnapshot -> {
+                                Log.d("CompanyMainActivity", "Transactions found: " + transactionsSnapshot.size());
+                                double totalRevenue = 0;
+
+                                for (DocumentSnapshot doc : transactionsSnapshot.getDocuments()) {
+                                    Transaction transaction = doc.toObject(Transaction.class);
+                                    if (transaction != null) {
+                                        String type = transaction.getType();
+                                        Log.d("CompanyMainActivity",
+                                                String.format("Transaction: type=%s, amount=%.2f",
+                                                        type, transaction.getAmount()));
+
+                                        if (Constants.TRANSACTION_ENTRY.equals(type) ||
+                                                Constants.TRANSACTION_SUBSCRIPTION.equals(type)) {
+                                            totalRevenue += transaction.getAmount();
+                                        }
+                                    }
+                                }
+
+                                Log.d("CompanyMainActivity", "Total revenue: " + totalRevenue);
+                                binding.tvMonthlyRevenue.setText(getString(R.string.price_format, totalRevenue));
+                            })
+                            .addOnFailureListener(e -> {
+                                Log.e("CompanyMainActivity", "Error loading transactions", e);
+                                Toast.makeText(this, "Error cargando transacciones", Toast.LENGTH_SHORT).show();
+                            });
+                })
+                .addOnFailureListener(e -> {
+                    Log.e("CompanyMainActivity", "Error loading bus lines", e);
+                    Toast.makeText(this, "Error cargando líneas de bus", Toast.LENGTH_SHORT).show();
                 });
     }
+
+
 
     private void loadBusLines() {
         String userId = preferenceManager.getUserId();

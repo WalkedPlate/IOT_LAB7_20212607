@@ -255,6 +255,67 @@
 
             </com.google.android.material.card.MaterialCardView>
 
+            <!-- QR Code-->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardQr"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_medium"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="4dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/margin_large">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/qr_code_title"
+                        android:textColor="@color/textPrimary"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_small"
+                        android:text="@string/qr_code_description"
+                        android:textColor="@color/textSecondary"
+                        android:textSize="14sp" />
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_medium">
+
+                        <ImageView
+                            android:id="@+id/ivQrCode"
+                            android:layout_width="240dp"
+                            android:layout_height="240dp"
+                            android:layout_gravity="center"
+                            android:scaleType="fitCenter"
+                            android:background="@color/white"
+                            android:contentDescription="@string/qr_code_description" />
+
+                    </FrameLayout>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnShareQr"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="@dimen/margin_medium"
+                        android:text="@string/btn_share_qr"
+                        app:icon="@drawable/ic_share"
+                        style="@style/Widget.Material3.Button.OutlinedButton" />
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>

@@ -56,6 +56,7 @@ dependencies {
     // QR Scanner
     //implementation libs.code.scanner
     implementation libs.code.scanner
+    implementation libs.core
 
     // Glide para cargar imágenes
     implementation libs.glide
@@ -68,4 +69,8 @@ dependencies {
     implementation libs.circleimageview
 
 
+    def camerax_version = "1.4.0"
+    implementation libs.camera.core
+    implementation libs.camera.camera2
+    implementation libs.camera.lifecycle
 }

@@ -12,6 +12,8 @@ public class Constants {
     public static final String TRANSACTION_ENTRY = "ENTRY";
     public static final String TRANSACTION_EXIT = "EXIT";
     public static final String TRANSACTION_SUBSCRIPTION = "SUBSCRIPTION";
+    public static final String TRANSACTION_STATUS_COMPLETED = "COMPLETED";
+    public static final String TRANSACTION_STATUS_FAILED = "FAILED";
 
     // Cashback
     public static final int CASHBACK_THRESHOLD_MINUTES = 15;

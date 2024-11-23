@@ -21,45 +21,92 @@
             android:layout_height="60dp"
             android:padding="16dp"
             android:src="@drawable/ic_check_circle"
+            android:contentDescription="@string/success_icon"
             app:tint="@color/white" />
 
     </com.google.android.material.card.MaterialCardView>
 
     <TextView
         android:id="@+id/tvMessage"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_medium"
         android:textAlignment="center"
         android:textColor="@color/textPrimary"
         android:textSize="20sp"
         android:textStyle="bold"
+        android:maxLines="2"
+        android:ellipsize="end"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/cardIcon" />
 
-    <TextView
-        android:id="@+id/tvAmount"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/llCompanyInfo"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_small"
-        android:textColor="@color/success"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvMessage" />
+        android:orientation="vertical"
+        android:layout_marginTop="@dimen/margin_medium"
+        android:gravity="center"
+        android:padding="@dimen/margin_small"
+        app:layout_constraintTop_toBottomOf="@id/tvMessage">
 
-    <TextView
-        android:id="@+id/tvBalance"
-        android:layout_width="wrap_content"
+        <TextView
+            android:id="@+id/tvCompanyName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/textSecondary"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:maxLines="1"
+            android:ellipsize="end" />
+
+    </LinearLayout>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardAmount"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_small"
-        android:textColor="@color/textSecondary"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvAmount" />
+        android:layout_marginTop="@dimen/margin_medium"
+        app:cardBackgroundColor="@color/surface"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="0dp"
+        app:strokeWidth="1dp"
+        app:strokeColor="@color/divider"
+        app:layout_constraintTop_toBottomOf="@id/llCompanyInfo">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:padding="@dimen/margin_medium">
+
+            <TextView
+                android:id="@+id/tvAmount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/success"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="@dimen/margin_small" />
+
+            <View
+                android:layout_width="40dp"
+                android:layout_height="1dp"
+                android:background="@color/divider"
+                android:layout_margin="@dimen/margin_small" />
+
+            <TextView
+                android:id="@+id/tvBalance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/textSecondary"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnOk"
@@ -67,8 +114,11 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_large"
         android:text="@string/btn_ok"
-        app:cornerRadius="8dp"
+        android:textAllCaps="false"
+        app:cornerRadius="12dp"
+        android:paddingTop="@dimen/margin_small"
+        android:paddingBottom="@dimen/margin_small"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvBalance" />
+        app:layout_constraintTop_toBottomOf="@id/cardAmount" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

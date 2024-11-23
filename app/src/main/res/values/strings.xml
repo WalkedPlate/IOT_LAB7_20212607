@@ -125,5 +125,60 @@
     <string name="select_images">Seleccionar imágenes</string>
     <string name="delete_image_confirmation">¿Está seguro que desea eliminar esta imagen?</string>
 
+    <string name="error_storage_permission">Se necesita permiso para acceder a las imágenes</string>
+    <string name="title_edit_bus">Editar línea de bus</string>
+    <string name="title_add_bus">Añadir línea de bus</string>
+    <string name="error_permissions">Se necesitan permisos para continuar</string>
+
+    <string name="bus_qr_code">Código QR del Bus</string>
+    <string name="generate_qr">Generar QR</string>
+    <string name="view_qr">Ver QR</string>
+    <string name="share_qr">Compartir QR</string>
+    <string name="share_qr_title">Compartir QR del bus</string>
+    <string name="error_generating_qr">Error al generar el código QR</string>
+    <string name="error_sharing_qr">Error al compartir el código QR</string>
+
+    <string name="error_same_scan">Por favor, espera unos segundos antes de escanear nuevamente</string>
+    <string name="error_camera">Error al acceder a la cámara</string>
+    <string name="error_invalid_bus">Bus no encontrado</string>
+    <string name="flash_on">Linterna encendida</string>
+    <string name="flash_off">Linterna apagada</string>
+
+    <string name="error_flash">Error al controlar la linterna</string>
+    <string name="error_check_transactions">Error al verificar transacciones</string>
+    <string name="error_check_bus">Error al verificar el bus</string>
+
+
+    <string name="error_timeout">La operación ha excedido el tiempo límite</string>
+    <string name="error_already_exited">Ya registraste tu salida de este bus</string>
+    <string name="error_no_entry_found">No se encontró un registro de entrada para este bus</string>
+    <string name="error_saving_transaction">Error al guardar la transacción</string>
+    <string name="error_invalid_entry">Transacción de entrada inválida</string>
+    <string name="error_checking_entry">Error al verificar la entrada</string>
+    <string name="error_checking_exit">Error al verificar la salida</string>
+
+    <string name="error_flash_toggle">Error al cambiar el flash</string>
+    <string name="success_icon">Ícono de éxito</string>
+    <string name="error_checking_user">Error al verificar información del usuario</string>
+    <string name="balance_format">S/ %.2f</string>
+
+    <string name="qr_code_title">Código QR de la línea</string>
+    <string name="qr_code_description">Escanea este código para registrar tu entrada o salida del bus</string>
+    <string name="btn_share_qr">Compartir QR</string>
+
+    <string name="insufficient_balance_message">Saldo insuficiente para viajar en %s</string>
+    <string name="current_balance_format">Saldo actual: S/ %.2f</string>
+    <string name="required_amount_format">Monto requerido: S/ %.2f</string>
+    <string name="missing_amount_format">Te faltan: S/ %.2f</string>
+    <string name="error_no_entry_title">No hay entrada registrada</string>
+    <string name="error_no_entry_message">No se encontró un registro de entrada válido para este bus. Debes registrar tu entrada antes de poder registrar una salida.</string>
+
+
+    <string name="monthly_revenue_format">Ingresos del mes: S/ %.2f</string>
+    <string name="revenue_format">Ingresos: S/ %.2f</string>
+
+    <string name="subscription_count_format">%d suscriptores</string>
+    <string name="error_creating_bus_line">Error al crear la línea de bus inicial</string>
+
 
 </resources>

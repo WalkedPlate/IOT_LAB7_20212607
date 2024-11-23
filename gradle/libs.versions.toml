@@ -1,10 +1,12 @@
 [versions]
 agp = "8.6.0"
 appcompatVersion = "1.6.1"
+cameraCore = "1.4.0"
 circleimageview = "3.1.0"
 codeScanner = "2.3.2"
 compiler = "4.16.0"
 constraintlayoutVersion = "2.1.4"
+core = "3.5.2"
 firebaseBom = "33.6.0"
 glide = "4.16.0"
 googleServices = "4.4.2"
@@ -23,10 +25,14 @@ whynotimagecarousel = "2.1.0"
 
 [libraries]
 appcompat-v161 = { module = "androidx.appcompat:appcompat", version.ref = "appcompatVersion" }
+camera-camera2 = { module = "androidx.camera:camera-camera2", version.ref = "cameraCore" }
+camera-core = { module = "androidx.camera:camera-core", version.ref = "cameraCore" }
+camera-lifecycle = { module = "androidx.camera:camera-lifecycle", version.ref = "cameraCore" }
 circleimageview = { module = "de.hdodenhof:circleimageview", version.ref = "circleimageview" }
 code-scanner = { module = "com.github.yuriy-budiyev:code-scanner", version.ref = "codeScanner" }
 compiler = { module = "com.github.bumptech.glide:compiler", version.ref = "compiler" }
 constraintlayout-v214 = { module = "androidx.constraintlayout:constraintlayout", version.ref = "constraintlayoutVersion" }
+core = { module = "com.google.zxing:core", version.ref = "core" }
 firebase-auth = { module = "com.google.firebase:firebase-auth" }
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
 firebase-firestore = { module = "com.google.firebase:firebase-firestore" }

@@ -1,9 +1,14 @@
 package com.example.iot_lab7_20212607.models;
 
+import com.google.firebase.firestore.Exclude;
+import com.google.firebase.firestore.IgnoreExtraProperties;
+
 import java.util.ArrayList;
 import java.util.List;
 
+@IgnoreExtraProperties
 public class BusLine {
+    @Exclude
     private String id;
     private String name;
     private String companyId;
@@ -23,10 +28,12 @@ public class BusLine {
         this.imageUrls = new ArrayList<>();
     }
 
+    @Exclude
     public String getId() {
         return id;
     }
 
+    @Exclude
     public void setId(String id) {
         this.id = id;
     }

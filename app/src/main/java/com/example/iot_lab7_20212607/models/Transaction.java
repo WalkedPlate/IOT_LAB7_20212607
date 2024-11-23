@@ -7,6 +7,7 @@ public class Transaction {
     private double amount;
     private long timestamp;
     private double cashback;
+    private String status;
 
     public Transaction() {
     }
@@ -18,6 +19,14 @@ public class Transaction {
         this.amount = amount;
         this.timestamp = timestamp;
         this.cashback = cashback;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public String getUserId() {

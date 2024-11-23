@@ -23,10 +23,13 @@
     <color name="background">#FFFFFF</color>
     <color name="backgroundGray">#F5F5F5</color>
     <color name="divider">#EEEEEE</color>
+    <color name="surface">#FFFFFF</color>
 
     <!-- Colores básicos -->
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="transparent">#00000000</color>
+    <color name="semi_transparent">#80000000</color>
+
 
 </resources>

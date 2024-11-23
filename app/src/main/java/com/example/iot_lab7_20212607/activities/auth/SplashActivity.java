@@ -33,8 +33,8 @@ public class SplashActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
 
-        // Esperar 2 segundos y verificar autenticación
-        new Handler(Looper.getMainLooper()).postDelayed(this::checkAuth, 2000);
+        // Esperar 1 segundo y verificar autenticación
+        new Handler(Looper.getMainLooper()).postDelayed(this::checkAuth, 1000);
 
     }
 

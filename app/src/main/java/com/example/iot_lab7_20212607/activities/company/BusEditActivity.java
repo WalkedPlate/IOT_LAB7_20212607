@@ -1,12 +1,23 @@
 package com.example.iot_lab7_20212607.activities.company;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -22,7 +33,14 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.WriterException;
+import com.google.zxing.common.BitMatrix;
+import com.google.zxing.qrcode.QRCodeWriter;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,6 +55,9 @@ public class BusEditActivity extends AppCompatActivity {
     private BusImageAdapter imageAdapter;
     private List<Uri> newImages;
     private static final int PICK_IMAGE_REQUEST = 1;
+    private static final int STORAGE_PERMISSION_REQUEST = 2;
+    private Bitmap qrBitmap;
+    private static final int QR_SIZE = 256;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +71,10 @@ public class BusEditActivity extends AppCompatActivity {
         newImages = new ArrayList<>();
 
         busLineId = getIntent().getStringExtra("busLineId");
+
+        binding.toolbar.setTitle(busLineId != null ?
+                R.string.title_edit_bus : R.string.title_add_bus);
+
         setupViews();
 
         if (busLineId != null) {
@@ -76,7 +101,82 @@ public class BusEditActivity extends AppCompatActivity {
 
         // Configurar FAB de guardar
         binding.fabSave.setOnClickListener(v -> validateAndSave());
+
+        // Configurar botones de QR
+        binding.btnGenerateQr.setOnClickListener(v -> generateQR());
+        binding.btnShareQr.setOnClickListener(v -> shareQR());
+
+        // Si estamos en editar, generamos QR automáticamente
+        if (busLineId != null) {
+            binding.btnGenerateQr.setText(R.string.view_qr);
+        }
     }
+
+    private void generateQR() {
+        try {
+            String qrContent = "BUS_ID:" + (busLineId != null ? busLineId : "NEW");
+
+            QRCodeWriter writer = new QRCodeWriter();
+            BitMatrix bitMatrix = writer.encode(qrContent, BarcodeFormat.QR_CODE, QR_SIZE, QR_SIZE);
+
+            int width = bitMatrix.getWidth();
+            int height = bitMatrix.getHeight();
+            Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+
+            for (int x = 0; x < width; x++) {
+                for (int y = 0; y < height; y++) {
+                    bitmap.setPixel(x, y, bitMatrix.get(x, y) ? Color.BLACK : Color.WHITE);
+                }
+            }
+
+            binding.ivQrCode.setImageBitmap(bitmap);
+            binding.ivQrCode.setVisibility(View.VISIBLE);
+            binding.btnShareQr.setVisibility(View.VISIBLE);
+
+        } catch (WriterException e) {
+            Toast.makeText(this, getString(R.string.error_generating_qr),
+                    Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void shareQR() {
+        if (binding.ivQrCode.getDrawable() == null) return;
+
+        try {
+            // Crear un nuevo bitmap cada vez que compartimos xd
+            Bitmap qrToShare = Bitmap.createBitmap(QR_SIZE, QR_SIZE, Bitmap.Config.ARGB_8888);
+            Canvas canvas = new Canvas(qrToShare);
+            binding.ivQrCode.getDrawable().setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+            binding.ivQrCode.getDrawable().draw(canvas);
+
+            File cachePath = new File(getCacheDir(), "images");
+            cachePath.mkdirs();
+            File imageFile = new File(cachePath, "bus_qr.png");
+
+            try (FileOutputStream stream = new FileOutputStream(imageFile)) {
+                qrToShare.compress(Bitmap.CompressFormat.PNG, 80, stream);
+                stream.flush();
+            }
+
+            // Liberar memoria
+            qrToShare.recycle();
+
+            Uri contentUri = FileProvider.getUriForFile(this,
+                    "com.example.iot_lab7_20212607.fileprovider", imageFile);
+
+            Intent shareIntent = new Intent(Intent.ACTION_SEND);
+            shareIntent.setType("image/png");
+            shareIntent.putExtra(Intent.EXTRA_STREAM, contentUri);
+            shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+
+            startActivity(Intent.createChooser(shareIntent, getString(R.string.share_qr_title)));
+
+        } catch (IOException e) {
+            Toast.makeText(this, getString(R.string.error_sharing_qr),
+                    Toast.LENGTH_SHORT).show();
+        }
+    }
+
 
     private void loadBusLineData() {
         DialogUtils.showLoadingDialog(this, getString(R.string.loading_generic));
@@ -111,6 +211,21 @@ public class BusEditActivity extends AppCompatActivity {
     }
 
     private void openImagePicker() {
+        // Verificar permisos primero
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ContextCompat.checkSelfPermission(this,
+                    Manifest.permission.READ_MEDIA_IMAGES) != PackageManager.PERMISSION_GRANTED) {
+                checkPermissions();
+                return;
+            }
+        } else {
+            if (ContextCompat.checkSelfPermission(this,
+                    Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                checkPermissions();
+                return;
+            }
+        }
+
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
@@ -118,6 +233,7 @@ public class BusEditActivity extends AppCompatActivity {
         startActivityForResult(Intent.createChooser(intent,
                 getString(R.string.select_images)), PICK_IMAGE_REQUEST);
     }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -137,6 +253,35 @@ public class BusEditActivity extends AppCompatActivity {
             updateImagePreview();
         }
     }
+
+    private void checkPermissions() {
+        List<String> permissionsNeeded = new ArrayList<>();
+
+        // Verificar permisos según versión de Android
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ContextCompat.checkSelfPermission(this,
+                    Manifest.permission.READ_MEDIA_IMAGES) != PackageManager.PERMISSION_GRANTED) {
+                permissionsNeeded.add(Manifest.permission.READ_MEDIA_IMAGES);
+            }
+        } else {
+            if (ContextCompat.checkSelfPermission(this,
+                    Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                permissionsNeeded.add(Manifest.permission.READ_EXTERNAL_STORAGE);
+            }
+        }
+
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            permissionsNeeded.add(Manifest.permission.CAMERA);
+        }
+
+        if (!permissionsNeeded.isEmpty()) {
+            ActivityCompat.requestPermissions(this,
+                    permissionsNeeded.toArray(new String[0]),
+                    STORAGE_PERMISSION_REQUEST);
+        }
+    }
+
 
     private void updateImagePreview() {
         List<String> currentImages = currentBusLine.getImageUrls() != null ?
@@ -297,4 +442,32 @@ public class BusEditActivity extends AppCompatActivity {
     interface OnImagesUploadedListener {
         void onComplete(boolean success);
     }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == STORAGE_PERMISSION_REQUEST) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                openImagePicker();
+            } else {
+                Toast.makeText(this, getString(R.string.error_storage_permission),
+                        Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        checkPermissions();
+        if (busLineId != null && binding.ivQrCode.getDrawable() == null) {
+            generateQR();
+        }
+    }
+
+
+
 }

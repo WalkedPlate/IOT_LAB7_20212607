@@ -2,6 +2,7 @@ package com.example.iot_lab7_20212607.activities.operational;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -16,6 +17,7 @@ import com.example.iot_lab7_20212607.activities.auth.LoginActivity;
 import com.example.iot_lab7_20212607.adapters.BusLineAdapter;
 import com.example.iot_lab7_20212607.databinding.ActivityOperationalMainBinding;
 import com.example.iot_lab7_20212607.models.BusLine;
+import com.example.iot_lab7_20212607.models.User;
 import com.example.iot_lab7_20212607.preferences.PreferenceManager;
 import com.example.iot_lab7_20212607.utils.DialogUtils;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
@@ -48,6 +50,13 @@ public class OperationalMainActivity extends AppCompatActivity {
         loadBusLines();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        binding.bottomNavigation.setSelectedItemId(R.id.nav_lines);
+        refreshUserData();
+    }
+
     private void setupViews() {
         // Configurar RecyclerView
         binding.rvBusLines.setLayoutManager(new LinearLayoutManager(this));
@@ -60,12 +69,23 @@ public class OperationalMainActivity extends AppCompatActivity {
 
         // Configurar BottomNavigationView
         binding.bottomNavigation.setOnItemSelectedListener(item -> {
-            if (item.getItemId() == R.id.nav_scan) {
-                startActivity(new Intent(this, QrScannerActivity.class));
+            int itemId = item.getItemId();
+            if (itemId == R.id.nav_scan) {
+                // Iniciar QrScannerActivity
+                Intent intent = new Intent(this, QrScannerActivity.class);
+                startActivity(intent);
+                // No mantener seleccionado el ítem de escaneo
+                binding.bottomNavigation.postDelayed(() ->
+                        binding.bottomNavigation.setSelectedItemId(R.id.nav_lines), 300);
+                return false;
+            } else if (itemId == R.id.nav_lines) {
                 return true;
             }
             return false;
         });
+
+        // Establecer el ítem inicial
+        binding.bottomNavigation.setSelectedItemId(R.id.nav_lines);
 
         // Configurar botón de logout
         binding.btnLogout.setOnClickListener(v -> logout());
@@ -73,9 +93,33 @@ public class OperationalMainActivity extends AppCompatActivity {
 
     private void setupUser() {
         String userName = preferenceManager.getUserName();
-        double balance = preferenceManager.getUserBalance();
-
         binding.tvWelcome.setText(getString(R.string.welcome_message, userName));
+        updateBalanceUI();
+    }
+
+    private void refreshUserData() {
+        // Obtener datos actualizados de Firebase
+        String userId = preferenceManager.getUserId();
+        mFirestore.collection("users")
+                .document(userId)
+                .get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    User user = documentSnapshot.toObject(User.class);
+                    if (user != null) {
+                        // Actualizar SharedPreferences
+                        preferenceManager.updateBalance(user.getBalance());
+                        // Actualizar UI
+                        updateBalanceUI();
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    Log.e("OperationalMainActivity", "Error actualizando datos del usuario", e);
+                    updateBalanceUI();
+                });
+    }
+
+    private void updateBalanceUI() {
+        double balance = preferenceManager.getUserBalance();
         binding.tvBalance.setText(getString(R.string.label_balance, balance));
     }
 
