@@ -44,7 +44,7 @@ public class LoginActivity extends AppCompatActivity {
     private FirebaseFirestore mFirestore;
     private PreferenceManager preferenceManager;
 
-    private static final String COMPANY_EMAIL = " ampueromario@hotmail.com";
+    private static final String COMPANY_EMAIL = "ampueromario@hotmail.com";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
